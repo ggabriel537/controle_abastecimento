@@ -26,16 +26,44 @@ class _CadastroLoginState extends State<CadastroLogin> {
       return;
     }
 
-    await autenticacao.createUserWithEmailAndPassword(email: email, password: senha);
+    try{
+      await autenticacao.createUserWithEmailAndPassword(email: email, password: senha);
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Cadastro realizado com sucesso!'),
+          backgroundColor: Colors.green,
+        ),
+      );
+      emailController.clear();
+      senhaController.clear();
 
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text('Cadastro realizado com sucesso!'),
-        backgroundColor: Colors.green,
-      ),
-    );
-    emailController.clear();
-    senhaController.clear();
+    }on FirebaseAuthException catch (e)
+    {
+      String erro;
+      if (e.code == 'email-already-in-use')
+        {
+          erro = "Email já cadastrado!";
+        }
+      else {
+        if (e.code == 'invalid-email') {
+          erro = "Email inválido!";
+        } else {
+          if(e.code == 'weak-password')
+          {
+            erro = "Senha fraca!";
+          }else {
+            erro = "Erro desconhecido!";
+          }
+        }
+      }
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(erro),
+          backgroundColor: Colors.red,
+        ),
+      );
+    }
   }
 
   @override
