@@ -2,60 +2,43 @@ import 'package:controleabastecimento/Telas/login.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-
-class CadastroLogin extends StatefulWidget {
+class Recuperarsenha extends StatefulWidget {
   @override
-  State<CadastroLogin> createState() => _CadastroLoginState();
+  State<Recuperarsenha> createState() => _RecuperarsenhaState();
 }
 
-class _CadastroLoginState extends State<CadastroLogin> {
+class _RecuperarsenhaState extends State<Recuperarsenha> {
   final TextEditingController emailController = TextEditingController();
-  final TextEditingController senhaController = TextEditingController();
   final FirebaseAuth _autenticacao = FirebaseAuth.instance;
 
-  void _cadastrarUsuario() async {
+  void _recuperarSenha() async {
     final String email = emailController.text.trim();
-    final String senha = senhaController.text.trim();
 
-    if (email.isEmpty || senha.isEmpty) {
+    if (email.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text('Preencha todos os campos.'),
+          content: Text('E-mail em branco!'),
           backgroundColor: Colors.red,
         ),
       );
       return;
     }
 
-    try{
-      await _autenticacao.createUserWithEmailAndPassword(email: email, password: senha);
+    try {
+      await _autenticacao.sendPasswordResetEmail(email: email);
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text('Cadastro realizado com sucesso!'),
+          content: Text('E-mail de recuperação enviado!'),
           backgroundColor: Colors.green,
         ),
       );
       emailController.clear();
-      senhaController.clear();
-
-    }on FirebaseAuthException catch (e)
-    {
+    } on FirebaseAuthException catch (e) {
       String erro;
-      if (e.code == 'email-already-in-use')
-        {
-          erro = "Email já cadastrado!";
-        }
-      else {
-        if (e.code == 'invalid-email') {
-          erro = "Email inválido!";
-        } else {
-          if(e.code == 'weak-password')
-          {
-            erro = "Senha fraca!";
-          }else {
-            erro = "Erro desconhecido!";
-          }
-        }
+      if (e.code == 'user-not-found') {
+        erro = "E-mail não encontrado!";
+      } else {
+        erro = "Erro desconhecido!";
       }
 
       ScaffoldMessenger.of(context).showSnackBar(
@@ -71,7 +54,7 @@ class _CadastroLoginState extends State<CadastroLogin> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Cadastro de Login'),
+        title: Text('Recuperação de Senha'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -84,17 +67,10 @@ class _CadastroLoginState extends State<CadastroLogin> {
               controller: emailController,
               keyboardType: TextInputType.emailAddress,
             ),
-            TextField(
-              decoration: InputDecoration(
-                labelText: 'Senha',
-              ),
-              controller: senhaController,
-              obscureText: true,
-            ),
             SizedBox(height: 20),
             ElevatedButton(
-              onPressed: _cadastrarUsuario,
-              child: Text('Salvar'),
+              onPressed: _recuperarSenha,
+              child: Text('Enviar e-mail de recuperação'),
             ),
             ElevatedButton(
               onPressed: () {
@@ -103,8 +79,8 @@ class _CadastroLoginState extends State<CadastroLogin> {
                   MaterialPageRoute(builder: (context) => LoginUsuario()),
                 );
               },
-              child: Text('Login'),
-            )
+              child: Text('Voltar para o Login'),
+            ),
           ],
         ),
       ),
