@@ -1,5 +1,6 @@
 import 'package:controleabastecimento/Telas/Abastecimento/historicoabastecimento.dart';
 import 'package:controleabastecimento/Telas/Login_e_Cadastro/login.dart';
+import 'package:controleabastecimento/Telas/Perfil/AlterarSenha.dart';
 import 'package:controleabastecimento/Telas/Veiculo/adicionarveiculo.dart';
 import 'package:controleabastecimento/Telas/Veiculo/principal.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -92,7 +93,12 @@ class DrawerWidget extends StatelessWidget {
           ListTile(
             leading: Icon(Icons.person),
             title: Text('Perfil'),
-            onTap: () {},
+            onTap: () {Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => AlterarSenha(),
+              ),
+            );},
           ),
           ListTile(
             leading: Icon(Icons.logout),
