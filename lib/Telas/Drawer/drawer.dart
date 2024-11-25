@@ -1,3 +1,4 @@
+import 'package:controleabastecimento/Telas/Abastecimento/historicoabastecimento.dart';
 import 'package:controleabastecimento/Telas/Login_e_Cadastro/login.dart';
 import 'package:controleabastecimento/Telas/Veiculo/adicionarveiculo.dart';
 import 'package:controleabastecimento/Telas/Veiculo/principal.dart';
@@ -81,7 +82,12 @@ class DrawerWidget extends StatelessWidget {
           ListTile(
             leading: Icon(Icons.history),
             title: Text('Histórico de Abastecimentos'),
-            onTap: () {},
+            onTap: () {Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => HistoricoAbastecimento(),
+              ),
+            );},
           ),
           ListTile(
             leading: Icon(Icons.person),
