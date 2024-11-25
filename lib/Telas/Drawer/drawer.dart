@@ -1,4 +1,5 @@
 import 'package:controleabastecimento/Telas/Login_e_Cadastro/login.dart';
+import 'package:controleabastecimento/Telas/Veiculo/adicionarveiculo.dart';
 import 'package:controleabastecimento/Telas/Veiculo/principal.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -54,8 +55,8 @@ class DrawerWidget extends StatelessWidget {
             ),
           ),
           ListTile(
-            leading: Icon(Icons.home),
-            title: Text('Home'),
+            leading: Icon(Icons.directions_car),
+            title: Text('Meus Veiculos'),
             onTap: () {
               Navigator.push(
                 context,
@@ -66,14 +67,16 @@ class DrawerWidget extends StatelessWidget {
             },
           ),
           ListTile(
-            leading: Icon(Icons.directions_car),
-            title: Text('Meus Veículos'),
-            onTap: () {},
-          ),
-          ListTile(
             leading: Icon(Icons.add),
             title: Text('Adicionar Veículo'),
-            onTap: () {},
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => AdicionarVeiculo(),
+                ),
+              );
+            },
           ),
           ListTile(
             leading: Icon(Icons.history),

@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:controleabastecimento/Telas/Drawer/drawer.dart';
+import 'package:controleabastecimento/Telas/Veiculo/detalheveiculo.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -12,7 +13,11 @@ class Principal extends StatelessWidget {
         .where('email', isEqualTo: user.email)
         .snapshots()
         .map((snapshot) =>
-        snapshot.docs.map((doc) => doc.data()).toList());
+        snapshot.docs.map((doc) {
+          var data = doc.data() as Map<String, dynamic>;
+          data['id'] = doc.id;
+          return data;
+        }).toList());
   }
 
   @override
@@ -39,9 +44,21 @@ class Principal extends StatelessWidget {
               return ListTile(
                 title: Text(veiculo['nome']),
                 subtitle: Text(
-                    'Modelo: ${veiculo['modelo']}, '
-                        'Placa: ${veiculo['placa']}'
-                ),
+                    'Modelo: ${veiculo['modelo']}\n'
+                        'Placa: ${veiculo['placa']}'),
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => DetalheVeiculo(
+                        id: veiculo['id'],
+                        nome: veiculo['nome'],
+                        modelo: veiculo['modelo'],
+                        placa: veiculo['placa'],
+                      ),
+                    ),
+                  );
+                },
               );
             },
           );
