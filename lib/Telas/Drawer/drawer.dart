@@ -1,5 +1,5 @@
-import 'package:controleabastecimento/Telas/login.dart';
-import 'package:controleabastecimento/Telas/principal.dart';
+import 'package:controleabastecimento/Telas/Login_e_Cadastro/login.dart';
+import 'package:controleabastecimento/Telas/Veiculo/principal.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 

@@ -1,8 +1,8 @@
-import 'package:controleabastecimento/Telas/principal.dart';
-import 'package:controleabastecimento/Telas/recuperarsenha.dart';
+import 'package:controleabastecimento/Telas/Login_e_Cadastro/cadastro.dart';
+import 'package:controleabastecimento/Telas/Veiculo/principal.dart';
+import 'package:controleabastecimento/Telas/Login_e_Cadastro/recuperarsenha.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:controleabastecimento/Telas/cadastro.dart';
 
 class LoginUsuario extends StatefulWidget {
   @override
