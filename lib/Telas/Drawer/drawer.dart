@@ -13,11 +13,12 @@ class DrawerWidget extends StatelessWidget {
           backgroundColor: Colors.green,
         ),
       );
-      Navigator.push(
+      Navigator.pushAndRemoveUntil(
         context,
         MaterialPageRoute(
           builder: (context) => LoginUsuario(),
         ),
+            (Route<dynamic> route) => false,
       );
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -45,7 +46,7 @@ class DrawerWidget extends StatelessWidget {
                 Text(
                   'Menu de funções',
                   style: TextStyle(
-                    color: Colors.white30,
+                    color: Colors.white,
                     fontSize: 22,
                   ),
                 ),
