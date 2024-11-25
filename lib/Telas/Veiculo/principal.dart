@@ -8,8 +8,8 @@ class Principal extends StatelessWidget {
     final user = FirebaseAuth.instance.currentUser;
     if (user == null) return Stream.value([]);
     return FirebaseFirestore.instance
-        .collection('veiculos')
-        .where('userEmail', isEqualTo: user.email)
+        .collection('Veiculos')
+        .where('email', isEqualTo: user.email)
         .snapshots()
         .map((snapshot) =>
         snapshot.docs.map((doc) => doc.data()).toList());
